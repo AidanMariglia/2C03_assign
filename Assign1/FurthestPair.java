@@ -19,7 +19,6 @@ public class FurthestPair {
         pair[1] = max;
 
         return pair;
-
     }
     
 }
