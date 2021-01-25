@@ -32,14 +32,5 @@ public class SortedDuplicates {
                }
            }
         }
-    }
-
-    public static void main(String[] args) {
-        int[] test1 = {1,2,3,4,5,6,7,8,9};
-        int[] test2 = {1,3,5,6,9,10,11,12,13};
-
-        printDuplicates(test1, test2);
-    }
-
-    
+    }    
 }
