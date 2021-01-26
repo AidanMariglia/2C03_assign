@@ -21,9 +21,27 @@ public class StackUnderflow {
     
     
 
-    //unsure about this one.
-    private static boolean canPermExist(char[] n){
-        return true;
+    //n is the length of the sequence
+    private static boolean canPermExist(int[] perm, int n){
+        myStack stack = new myStack(n);
+
+        for (int i = 0; i < n; i++){
+
+            if (perm[i] == stack.peek()){
+             stack.pop();   
+            }
+
+            else if (perm[i] > stack.peek() || stack.getHeight() == 0){
+                for (int j = i; j < perm[i]; j++){
+                    stack.push(j);
+                }
+            }
+
+            else {
+                return false;
+            }
+        }
+        return true; 
     }
 
     

@@ -5,7 +5,10 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\usepackage{listings}
 
+\lstset{language=Java, basicstyle=\tiny, breaklines=true, showspaces=false,
+showstringspaces=false, breakatwhitespace=true}
 
 \title{2C03 Assignment 1}
 \author{Aidan Mariglia}
@@ -21,36 +24,153 @@ In collaboration with:
   \item Nathan Isaac Uy
 \end{itemize}
 
+
 \section*{1.3.45}
   
+
 To check if stack underflow ever occurs it is important to ensure that
 the number of consecutive pop operations never excedes the current height
 of the stack. To achieve this an integer counter can be used. The sequence
 can be checked, with every integer found incrementing the counter and every
 '-' found decrementing the counter. If the counter is ever a negative value,
-then stack underflow has occured.
+then stack underflow has occured. The memory used by this algorithm is
+independent of N as only one variable is instantiated to track the current
+height of the stack. (the char array n is only used to simulate an input stream).
+
+
+The second part of this question requires a more complex approach. All of the
+values from $1$ to $N-1$ are iterated through, and the value of the output
+permutation is checked at each index. In cases where the stack is empty, or 
+the value of the permutation at that index is greater than the index, values
+starting at the index and ending at the value stored at that index are pushed
+onto the stack. If the value on the top of the stack is equal to the current 
+permutation value, then the stack is popped. If neither of these conditions are
+met, then it is not possible for the output permutation to exist. This is because
+values are pushed onto the stack in order from least to greatest, meaning if the
+value on top of the stack is greater than the current permutation value at that
+index, then the desired value is somewhere else lower on the stack, and since we 
+are only using one stack and the values on top of the desired values cannot be 
+temporarily stored elsewhere, the specific permutation cannot exist.
+This is completed in linear time as the worst case would involve the permutation
+having the value $N-1$ as the first value, causing N pushes to the stack, however
+when the next value of the permutation was checked it would have to be lower than
+the value on top of the stack, meaning that the loop would terminate and the method
+would return false.
+
+
+\newpage
+\noindent \lstinputlisting[]{./StackUnderflow.java}
+
+
 
 \section*{1.4.5}
 
 \begin{enumerate}[label=(\alph*)]
 
   \item $n + 1 = \sim  n$
-  \item $1 + \frac{1}{n} = \sim 1$
-  \item $(1 + \frac{1}{n})(1 + \frac{2}{n}) = \sim 1$
-  \item $2n^3 - 15n^2 + n  = \sim 2n^3$
-  \item $\frac{\log 2n}{\log n} = \sim 1$
-  \item $\frac{\log (n^2 + 1)}{\log n} = \sim 2$
-  \item $\frac{n^{100}}{2^n} = \sim 1$
+  \item $1 + \frac{1}{n} = \sim 1$ (As $n$ approaches $\infty$ $\frac{1}{n}$
+  approaches $0$)
+  \item $(1 + \frac{1}{n})(1 + \frac{2}{n}) = \sim 1$ (Same as above for
+  $\frac{1}{n}$ and $\frac{2}{n}$)
+  \item $2n^3 - 15n^2 + n  = \sim 2n^3$ ($2n^3$ most significant term)
+  \item $\frac{\log 2n}{\log n} = \sim 1$ ($\log{2n} = \log 2 + \log n$,
+  we can ignore $\log 2$ $\frac{\log n}{\log n} = 1$)
+  \item $\frac{\log (n^2 + 1)}{\log n} = \sim 2$ (Ignore + 1, $\log n^2 = 2\log n$,
+  $\frac{2 \log n}{\log n} = 2$)
+  \item $\frac{n^{100}}{2^n} = \sim 0$ ($2^n$ "blows up" faster than $n^{100}$)
 
 \end{enumerate}
 
 \section*{1.4.6}
 
 \begin{enumerate}[label = (\alph*)]
-  \item $n$
-  \item $n$
-  \item $n\log{n}$
+  \item The iterator sum++ will be the operation used to track run time
+  as it occurs most. The outer for loop starts with n = N and halves N every
+  iteration. The inner for loop runs n times. Meaning the sum variable will be
+  iterated $N + \frac{N}{2} + \frac{N}{4} + \frac{N}{8} ...$ times. This is a
+  geometric series, the sum of which is $2N-1$. Therefore the order of growth
+  is $N$. 
+  \item This loop structure is largely the same as the previous question, except
+  rather than halving the value of every time, it is doubled. However the inner
+  variable is iterated the same number of times, meaning the order of growth is $N$.
+  \item The outer loop will run $\log N$ times. The inner loop always runs
+  $N$ times. Therefore the order of growth $N\log{N}$.
 
 \end{enumerate}
+
+\section*{1.4.12}
+
+The algorithm chooses one of the arrays to iterate through. It first checks the
+simpliest case, the equality of the two arrays at the same index. If they are 
+equal, than it prints the duplicate. If not it checks if the value in the 
+array we are iterating through is greater than that off the other array. If it
+greater then the algorithm checks successive values in the second array until 
+either it is out of the bounds of the array or the value in the second array is
+greater then the first. The third case is the same as the second except it goes
+in the opposite direction, checking values below. The algorithms running time is
+proportional to N because the length of the arrays are the same and the arrays 
+are both sorted. This means there are a limited number of times the inner while
+loops can run before they will terminate. For example, in the worst case the first
+index of the first array would have a duplicate that is the final index of the
+second array. Since every number in the second array must then be smaller than
+the first number in the first array, the while loops will never run, and the 
+total running time will be $N + a$ where a is some constant.
+
+
+
+\noindent \lstinputlisting[]{./SortedDuplicates.java}
+
+
+
+\section*{1.4.17}
+
+To find the furthest pair in the unsorted array we need to find the largest and
+smallest number. Iterating through the array once and checking for the minimum
+and maximum number ensures the furthest pair is returned in linear time.
+
+\noindent \lstinputlisting[]{./FurthestPair.java}
+
+\section*{1.4.34}
+To solve the Hot-Cold problem start with 2 initial guesses, at 1 and N. Calculate
+the distance between the first guess, 1 and the desired number, and the second
+guess N, and the desired number. If the second guess is closer we say the guess
+is "hot" or closer than the previous guess. If not it is cold. This allows us 
+to split our range of numbers in half. Depending on if the guess was hot or cold,
+we can guess again either at the "top" or "bottom" of our new range, continously
+spliting our range in half until the guess is equal to the desired number.
+Since with each iteration we halve the number of elements that could possibly
+contain the number, the run time is $\log N$.
+\section*{1.5.14}
+
+This algorithm is very similar to the weighted quick-union. The only main
+difference is how the height is incremented compared to how the size is 
+accumulated in weighted quick-union. With this implementation the shorter 
+tree is always merged to the taller tree, ensuring that the height of a tree
+only increases when it is merged with a tree of the same height. The upperbound
+for the height of a tree is $ \log N$ because the worst case for tree height has
+all of the member in one set, and each parent in the tree has two children. This
+is the case as to increase the height of the tree, trees of matching heights 
+must be merged. This means every time the height increases, the number of members
+doubles. Or in other words we can only have $\log N$ number of doublings, so the
+max height is $\log N$.
+
+
+\noindent \lstinputlisting[]{./WeightedUF.java}
+\section*{1.5.15}
+
+The worst case occurs for a weighted quick union when the maximum number of
+height increases occur. Since the height only increases when trees of the
+same size are merged. Following a simple code trace we see that this causes 
+the levels closer to the middle to have more nodes stored at them, increasing 
+in the same way binomial co-efficients do, as you grow the worst case tree you
+see the pattern 1, 1 1, 1 2 1, 1 3 3 1. The same as different levels of binary
+co-efficients.
+
+Since we can see that the number of nodes at certain levels of the tree resemble
+binomial co-efficients and we also know that binomial co-effficients are 
+mirrored across the center, we can infer that the average depth of a node in
+a worst case tree will also be in the middle, or rather have a depth of $\frac{N}{2}$
+
+
 
 \end{document}
