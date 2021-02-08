@@ -1,0 +1,138 @@
+\documentclass[12pt]{article}
+
+\usepackage{fullpage}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\lstset{language=Java, basicstyle=\tiny, breaklines=true, showspaces=false,
+showstringspaces=false, breakatwhitespace=true}
+
+\title{2C03 Assignment 2}
+\author{Aidan Mariglia}
+
+
+\begin{document}
+\maketitle
+
+In collaboration with:
+\begin{itemize}[noitemsep]
+    \item Ben Dubois
+    \item David Moroniti
+    \item Declany Young
+    \item Nathan Isaac Uy
+\end{itemize}
+
+\section*{2.1.7}
+
+A reversed array is the worst case input for both selection and insertion sort.
+The runtime approximation for both algorithms using compares as the performance
+metric in this case is $\frac{N^2}{2}$. However, in the worst case the number of
+exchanges made by insertion sort is also $\frac{N^2}{2}$, it is only $N$ for
+selection sort. So while in theory they would have the same runtime, in 
+practice selection sort would be the faster algorithm.
+
+\section*{2.1.8}
+
+The runtime for insertion sort on a randomly ordered array of composed
+of only three distinct elements is quardratic. The algorithm will form three
+distinct segments of elements all with the same value. Despite this, when
+inserting an element, the algorithm will still need to scan the majority of
+the sorted array to it's left. If the value to be inserted is smaller then
+the values stored in the current segment, the algorithm still needs to check
+every value in the segment, in order to find where the segment ends and the
+next segment begins.
+
+\section*{2.1.20}
+
+The best case for shell sort is an array that is already sorted. Any
+\emph{h}-index subarray of a sorted array is also sorted. Since the 
+subarrays are insertion sorted, and the best case for an insertion sort
+is a presorted array, a pre sorted array is also the best case for shell sort.
+
+\section*{2.2.21}
+
+The algorithm to solve this problem is essentially a modified 3 way merge.
+First, the three arrays are alphabetically, in this case java's inbuilt 
+array sorting method is used however any $n\log{n}$ sorting method can be
+used. After the arrays are sorted, a typical three way merge is used, 
+however instead of adding the lowest current element to an auxiliary 
+array, the array counter is simply iterated. If two strings are found to 
+be the same, than the string is returned. Since the initial sort has a 
+running time of $n\log{n}$ and the running time of the merge is linear, 
+in the worst case the running time of this algorithm is still $n\log{n}$.
+
+\noindent \lstinputlisting[]{./Triplicates.java}
+
+\section*{2.2.22}
+
+The order of growth of the overall running time of the three way merge sort
+is still $n\log{n}$. Examining the individual components of the merge sort
+algorithm, we can see that for the divide component there is no change in
+the order of growth. At each iteration we divide each sub array into 3 smaller
+sub arrays, meaning the order of growth remains $\log{n}$, (albiet the $\sim$
+approximation will have a different co-efficient). The merging component of
+the algorithm also remains linear, as the core loop that iterates through 
+the sub arrays remains the same, there are simply additional conditional
+statements to check the order of the merging. Effectively this is the same as 
+multiplying the $\sim$ approximation by a co-efficient. Since the only changes
+to the runtime of this algorithm are co-efficients, the order of growth remains
+$n\log{n}$.
+
+\section*{2.3.13}
+
+The worst case recursion depth for quick sort is $N$. In the worst case,
+when the array is partioned, we could have a subarray with $N - 1$ elements and
+the other sub array with $1$ elements. The next partition could have subarrays 
+$N - 2$ and $1$. This continues until we divide into two subarrays, $1$ and $1$.
+In this worst case the recursion depth is $N$, as each recursive call reduces
+the number of items in the sub array by one. The best case recursion depth 
+for quicksort is $\log{n}$. In the best case, the pivot chosen would have the
+same number of elements greater than it and less than it, resulting in 
+two even subarrays on every recursive step, eventually resutling in an 
+even weighted binary tree of height $\log{n}$. The average case recursion depth
+of quicksort will be some co-efficient mutliplied by the best case recursion depth.
+
+\section*{2.3.15}
+
+A modified version of the quick sort algorithm is an effective way to sort
+the two "piles" of nuts and bolts. The algorithm is largely unchanged. The
+only way that the algorithm differs is that the "pivot" is selected from 
+the opposite array. This allow us to seperate the the array into two subarrays,
+nuts that are larger than or fit the bolt selected, or nuts that are smaller 
+than the bolt selected. The same can happen with the array of bolts by selecting
+a nut for the pivot. Since we can achieve this comparison, the rest of the 
+quick sorting algorithm can be followed to efficiently sort both arrays.
+
+\newpage
+
+\section*{2.4.23}
+
+From the information provided in the text, the equation for the number of
+compares in a worst case sink() for a \emph{t}-ary heap is $t\log_t n$. 
+Each step down the tree will require $t$ compares as each parent node has
+$t$ children. The worst case height of this tree is $\log_t N$ instead of
+$\log_2 N$ as instead of $2^a$ elements per level (where $a$ is the level
+we are currently on), there are $t^a$ elements per level. We can pick an
+arbitrary value of $N$ and substiture different $t$ values to see which 
+requires the lowest number of compares. In this case $N = 1000$ will be used.
+
+\begin{itemize}
+    \item $t = 2$, $2 \log_2 1000 \sim 20$
+    \item $t = 3$, $3 \log_3 1000 \sim 18$
+    \item $t = 4$, $4 \log_4 1000 \sim 20$
+    \item $t = 5$, $5 \log_5 1000 \sim 21$
+\end{itemize}
+
+As we can see, $t=3$ appears to be a minimum value. Therefore a $3-ary$
+heap implementation would minimize the co-efficient of the running time of
+a heapsort.
+
+
+
+\end{document}
