@@ -1,0 +1,59 @@
+\documentclass[12pt]{article}
+
+\usepackage{fullpage}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\lstset{language=Java, basicstyle=\tiny, breaklines=true, showspaces=false,
+showstringspaces=false, breakatwhitespace=true}
+
+\title{2C03 Assignment 2}
+\author{Aidan Mariglia}
+
+\begin{document}
+\maketitle
+
+
+\section*{4.1.31}
+Since we have V vertices and each edge will connected 2 vertices, the number of
+possible edges is $\binom{V}{2}$. If the graph has E edges, than we will need to
+select E edges from the group of unique edges we just described. The resulting
+number of graph permutations is $\binom{\binom{V}{2}}{E}$. Using the binomial
+co-efficient formula, we are left with $\frac{\frac{V!}{2!(V - 2)!}!}{E!(\frac{V!}{2!(V - 2)!} - E)!}$
+possible graph permutations.
+
+\section*{4.1.32}
+Leveraging a hashtable, duplicate edges can be found in linear time.
+Using a hash function that takes into account a tuple (v1, v2), where v1 and
+v2 are the vertices connected by edge e, a simple boolean value can be stored
+in the hash table. The edges of the graph can be scanned linearly, with each
+edge being stored in the hashtable. If a collision occurs, then a parallel
+edge has been found.
+
+\section*{4.2.31}
+To start, an boolean array of a size equal to the number of vertices in the 
+graph is initialized. This will keep track of which vertices have been visited.
+Another array is initialized to keep track of which vertices are part of the
+strongly connected component. A depth first search is called on the vertex v.
+If one of the adjacent nodes to the current node is a part of the strongly connected
+component, the current node is added to the strongly connected component. To
+find all of the strongly connected components in a digraph, call the modified
+dfs that was previously described on each node within the graph once.
+
+\section*{4.2.41}
+To look for an odd cycle, first we must check if a graph is bipartite.
+This can be done using BFS, colouring the source vertex red, and all of its
+adjacent vertices blue. When arriving on a node, check if any of its adjacent
+vertices are the same colour as it is, if not, colour its non-coloured adjacent
+vertices blue if the current vertex is red, or red if the current vertex is blue.
+A graph with an odd cycle will always have at least one vertex that has an adjacent
+vertices which is the same colour.
+(Source - https://www.geeksforgeeks.org/bipartite-graph/)
+
+\end{document}

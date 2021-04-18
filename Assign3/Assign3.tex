@@ -1,0 +1,92 @@
+\documentclass[12pt]{article}
+
+\usepackage{fullpage}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\lstset{language=Java, basicstyle=\tiny, breaklines=true, showspaces=false,
+showstringspaces=false, breakatwhitespace=true}
+
+\title{2C03 Assignment 2}
+\author{Aidan Mariglia}
+
+\begin{document}
+\maketitle
+
+In collaboration with:
+\begin{itemize}[noitemsep]
+    \item Ben Dubois
+    \item David Moroniti
+    \item Declany Young
+    \item Nathan Isaac Uy
+\end{itemize}
+%%3.2.15 3.2.24 3.2.36 3.3.38
+%$ 3.4.15 3.5.25
+\section*{3.2.15}
+
+\begin{enumerate}[label=(\alph*)]
+\item E $\rightarrow$ Q
+\item E $\rightarrow$ Q
+\item E $\rightarrow$ Q
+\item E $\rightarrow$ Q $\rightarrow$ J
+\item E $\rightarrow$ D $\rightarrow$ Q $\rightarrow$ J $\rightarrow$ M $\rightarrow$ T $\rightarrow$ S
+\item E $\rightarrow$ D $\rightarrow$ A $\rightarrow$ Q $\rightarrow$ J $\rightarrow$ M $\rightarrow$ T $\rightarrow$ S
+\end{enumerate}
+
+\section*{3.2.24}
+
+Building a BST entails using the 'put' method on each member of
+a list of input values, in our case this list is N members long.
+In the best case, we construct a balanced BST, and our function calls
+for 'put' cost log(N) compares, as one compare is required at each level in
+the tree, and a ballanced tree will have log(N) levels. From this it is easy to see 
+that for building a BST the run time has a lower lower bound of Nlog(N), 
+as 'put' will always be called N times in order to insert N values 
+into the BST, and as previously mentioned, the best case runtime for put is 
+proportional to log(N).
+
+\section*{3.2.36}
+
+It is possible to create a nonrecursive version of keys using space proportional
+to the trees height. This is done by considering vertical slices of the tree,
+containing all nodes within the range. A stack is used to temporarily store
+values from the tree. First the root of the tree is pushed onto the stack,
+along with all of its left children (Stopping at smallest left child
+withing the specified range). Then, the top node is popped, its key is added
+to the queue, and if it has a right child, its right child and all of its 
+left children are pushed onto the stack. If the node does not have a right
+child, the next value on the stack is popped. This process stops when the max
+value in the range is reached, and the queue is returned.
+
+\section*{3.3.38}
+
+For every sequence of N values there exists a finite number of BST permutations
+that preserve the properties of BST's, (left child is less than right child).
+There are two extreme permutations which are essentially linked lists (maccaroni),
+a list in descending order with the greatest value at the root and every right
+child equal to null, and a list in ascending order with the smallest value at
+the root and every left child being null. A 'descending list' tree can be 
+made into an 'ascending list' tree using repeated right rotations. In the 
+process of changing from one extreme to the other, the tree exists as all
+of the permutations in between, meaning it is possible to move from one
+permutation to the other using only rotations.
+
+\section*{3.4.15}
+
+It would take  $\sim \frac{N^2}{2}$ compares in the worst case.
+
+\section*{3.5.25}
+
+To prevent such conflicts, the University could store the lecture times
+in a hash table, with the lecture time itself being the value that is hashed.
+In the case of the same value being inserted twice, the same hash will be generated
+and a collision will occur. In the case of a "collision" it will be clear that
+it is not possible to schedule a class at this time.
+
+\end{document}

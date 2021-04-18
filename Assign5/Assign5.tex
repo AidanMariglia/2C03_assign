@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+
+\usepackage{fullpage}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\lstset{language=Java, basicstyle=\tiny, breaklines=true, showspaces=false,
+showstringspaces=false, breakatwhitespace=true}
+
+\title{2C03 Assignment 5}
+\author{Aidan Mariglia}
+%%5.2.8, 5.3.11 5.3.21
+\begin{document}
+\maketitle
+
+\subsection*{5.2.8}
+
+floor():
+
+\noindent Recursively traverse all branches of the trie, using a counter to 
+keep track of the number of nodes passed at each step. When the value stored
+at a node is not null (i.e. it indicates the end of a key). Add that key to a
+list. When the counter exceeds the length of the target key, return. Sort the
+returned list, and return from the method the longest key which is not the
+target key.
+
+\medskip
+\noindent ceiling():
+
+\noindent Recursively traverse all branches of the trie, using a counter to 
+keep track of the number of nodes passed at each step. When the counter exceeds
+or is equal to the length of the target node, and the value stored at a node is
+not null (i.e. indicating the end of a key), add this ket to a list and return.
+Sort the returned list, and return the smallest value that is not the target key.
+
+\medskip
+\noindent rank():
+
+\noindent Recursively traverse all branches of the trie, keeping track of the
+number of nodes passed. Each time the value of the counter is less than the
+length of the target key, and the value at the node is not null, add that key
+to a list. When the counter exceeds or is equal to the length of the target
+key, return. Then, simply count the number of items in the list.
+
+\medskip
+\noindent select():
+
+\noindent Recursively traverse all branches of the trie. When you arrive
+at a key, use rank() to determine its rank. If it matches the target rank,
+return that key.
+
+\medskip
+\noindent
+
+\subsection*{5.3.11}
+
+Let P represent the pattern string, and T represent the text. First,
+any worst case for Boyer-Moore will require the alphabets used in P and T to be the same, 
+this makes the mismatched character heuristic useless, as there will never be a character
+in T that is not also in P. Secondly, T will have many instances of P, however
+there will also be many instances that are slightly different that P. For example,\\
+
+\noindent T = aabababaabababaabababaabababaababab\\
+P = babab\\
+
+\subsection*{5.3.21}
+To modify the Rabin-Karp algorithm to allow for a middle character "wildcard"
+is to modify the hash function used to exclude the middle character. Then,
+when the pattern is aligned with the substring in the text, check all characters
+excluding the middle.
+
+
+
+\end{document}
